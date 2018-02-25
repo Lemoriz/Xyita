@@ -1,0 +1,18 @@
+﻿<Application x:Class="Test.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Test"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <LinearGradientBrush x:Key="GrayBlueGradientBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#22b473" Offset="0" />
+            <GradientStop Color="#22b480" Offset="0.5" />
+            <GradientStop Color="#22b490" Offset="1" />
+            
+        </LinearGradientBrush>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="{StaticResource GrayBlueGradientBrush}" />
+            <Setter Property="Foreground" Value="#fff"/>
+        </Style>
+    </Application.Resources>
+</Application>
