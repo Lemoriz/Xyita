@@ -108,6 +108,12 @@ namespace FinanceAppCore
             }
 
             string info = File.ReadAllText(_fileName);
+            if (info == "")
+            {
+                SaveData();
+                return;
+            }
+
             var obj = JsonConvert.DeserializeObject<JArray>(info);
             _dayList = obj.ToObject<List<Day>>();
 
@@ -160,11 +166,17 @@ namespace FinanceAppCore
         }
     }
 
+    /// <summary>
+    /// Логика работы приложения
+    /// </summary>
     public class AppLogic
     {
 
         private readonly IDayRepository _repo;
 
+        /// <summary>
+        /// Репозиторий с данными
+        /// </summary>
         public IDayRepository Repository => _repo;
 
         public AppLogic(IDayRepository repo)
@@ -172,6 +184,11 @@ namespace FinanceAppCore
             _repo = repo;
         }
 
+        /// <summary>
+        /// Просчитать остаток за день
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
         public decimal CountForDay(DateTime date)
         {
             var day = _repo.GetDay(date);
@@ -179,6 +196,10 @@ namespace FinanceAppCore
             return day.PurchaseList.Sum(w => w.Price);
         }
 
+
+        /// <summary>
+        /// Просчитать остаток за диапазон дней
+        /// </summary>
         public decimal CountForRange(DateTime date1, DateTime date2)
         {
             if (date1 < date2) return 0;

@@ -14,10 +14,11 @@ namespace FinanceAppASP.Controllers
         private IDayRepository repo;
         private AppLogic logic;
 
-        public HomeController()
+
+
+    public HomeController()
         {
-            repo = new DayRepositoryMock();
-       
+            repo = new JsonRepository("data.txt");
             logic = new AppLogic(repo);
             
         }
