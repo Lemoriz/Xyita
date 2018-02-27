@@ -12,10 +12,14 @@ using Backend;
 
 namespace Test.ViewModels
 {
-    public class DayViewModel : INotifyPropertyChanged
+    public class DayViewModel 
     {
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public DayViewModel()
+        {
+            date = DateTime.Now;
+            Ebala = new List<string>{"Huita", "pizda", "anan sigin"};
+        }
 
         private DateTime date;
 
@@ -25,14 +29,12 @@ namespace Test.ViewModels
             set
             {
                 date = value;
-                OnPropertyChanged("Name");
+
             }
         }
 
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+
+        public List<string> Ebala { get; set; }
+
     }
 }

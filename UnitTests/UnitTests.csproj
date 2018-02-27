@@ -51,9 +51,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Test\FinanceApp.csproj">
+    <ProjectReference Include="..\Test\FinanceAppWPF.csproj">
       <Project>{c1fd5de4-7445-4f20-b850-943b5114e242}</Project>
-      <Name>FinanceApp</Name>
+      <Name>FinanceAppWPF</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

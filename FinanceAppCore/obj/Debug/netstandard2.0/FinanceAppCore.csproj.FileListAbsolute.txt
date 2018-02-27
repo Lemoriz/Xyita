@@ -1,0 +1,9 @@
+C:\source\csharp\Xyita\FinanceAppCore\bin\Debug\netstandard2.0\FinanceAppCore.deps.json
+C:\source\csharp\Xyita\FinanceAppCore\bin\Debug\netstandard2.0\FinanceAppCore.dll
+C:\source\csharp\Xyita\FinanceAppCore\obj\Debug\netstandard2.0\FinanceAppCore.csprojResolveAssemblyReference.cache
+C:\source\csharp\Xyita\FinanceAppCore\obj\Debug\netstandard2.0\FinanceAppCore.csproj.CoreCompileInputs.cache
+C:\source\csharp\Xyita\FinanceAppCore\obj\Debug\netstandard2.0\FinanceAppCore.AssemblyInfoInputs.cache
+C:\source\csharp\Xyita\FinanceAppCore\obj\Debug\netstandard2.0\FinanceAppCore.AssemblyInfo.cs
+C:\source\csharp\Xyita\FinanceAppCore\bin\Debug\netstandard2.0\FinanceAppCore.pdb
+C:\source\csharp\Xyita\FinanceAppCore\obj\Debug\netstandard2.0\FinanceAppCore.dll
+C:\source\csharp\Xyita\FinanceAppCore\obj\Debug\netstandard2.0\FinanceAppCore.pdb
