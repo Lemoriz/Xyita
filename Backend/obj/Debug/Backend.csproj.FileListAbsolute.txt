@@ -1,0 +1,9 @@
+C:\source\csharp\Xyita\Backend\obj\Debug\Backend.csprojResolveAssemblyReference.cache
+C:\source\csharp\Xyita\Backend\obj\Debug\Backend.csproj.CoreCompileInputs.cache
+C:\source\csharp\Xyita\Backend\bin\Debug\Backend.pdb
+C:\source\csharp\Xyita\Backend\obj\Debug\Backend.pdb
+C:\source\csharp\Xyita\Backend\bin\Debug\Newtonsoft.Json.dll
+C:\source\csharp\Xyita\Backend\bin\Debug\Newtonsoft.Json.xml
+C:\source\csharp\Xyita\Backend\bin\Debug\Backend.dll.config
+C:\source\csharp\Xyita\Backend\bin\Debug\Backend.dll
+C:\source\csharp\Xyita\Backend\obj\Debug\Backend.dll

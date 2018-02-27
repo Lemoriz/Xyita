@@ -1,0 +1,11 @@
+C:\source\csharp\Xyita\UnitTests\bin\Debug\UnitTests.dll
+C:\source\csharp\Xyita\UnitTests\bin\Debug\UnitTests.pdb
+C:\source\csharp\Xyita\UnitTests\bin\Debug\nunit.framework.dll
+C:\source\csharp\Xyita\UnitTests\bin\Debug\nunit.framework.xml
+C:\source\csharp\Xyita\UnitTests\obj\Debug\UnitTests.csprojResolveAssemblyReference.cache
+C:\source\csharp\Xyita\UnitTests\obj\Debug\UnitTests.csproj.CoreCompileInputs.cache
+C:\source\csharp\Xyita\UnitTests\obj\Debug\UnitTests.dll
+C:\source\csharp\Xyita\UnitTests\obj\Debug\UnitTests.pdb
+C:\source\csharp\Xyita\UnitTests\bin\Debug\Test.exe
+C:\source\csharp\Xyita\UnitTests\bin\Debug\Test.pdb
+C:\source\csharp\Xyita\UnitTests\bin\Debug\Test.exe.config
