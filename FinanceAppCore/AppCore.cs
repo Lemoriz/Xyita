@@ -147,6 +147,14 @@ namespace FinanceAppCore
                     PurchaseList = new List<Purchase> {
             new Purchase { Id = 0, Item = "item1", Count = 2, Price = 100M },
              new Purchase { Id = 1, Item = "item2", Count = 3, Price = 22M }}
+                },
+                new Day
+                {
+                    Id = 0,
+                    Date = DateTime.Today.AddDays(1),
+                    PurchaseList = new List<Purchase> {
+                        new Purchase { Id = 0, Item = "eqwd", Count = 41, Price = 100M },
+                        new Purchase { Id = 1, Item = "iqvvvv", Count = 3, Price = 22M }}
                 }
             };
         }

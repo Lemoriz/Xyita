@@ -1,0 +1,31 @@
+﻿@using FinanceAppCore
+@model ICollection<FinanceAppCore.Day>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="col-sm-3"></div>
+<div class="col-sm-6 mainWindow">
+
+
+    <div class="mainStack">
+
+    @foreach (var w in Model)
+    {
+        
+        <div class="day">
+        <h3>Закуп от @w.Date</h3>
+    
+        @foreach (var v in w.PurchaseList)
+        {
+        <h4>@v.Id @v.Item  @v.Count</h4>
+            
+        }
+
+        </div>
+    }
+
+    </div>
+</div>
+

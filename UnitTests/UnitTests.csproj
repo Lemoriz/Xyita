@@ -51,7 +51,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Test\FinanceAppWPF.csproj">
+    <ProjectReference Include="..\FinanceAppWPF\FinanceAppWPF.csproj">
       <Project>{c1fd5de4-7445-4f20-b850-943b5114e242}</Project>
       <Name>FinanceAppWPF</Name>
     </ProjectReference>
