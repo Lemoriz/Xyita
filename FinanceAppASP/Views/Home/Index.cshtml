@@ -7,11 +7,9 @@
 }
 
 <div class="row">
-    <div class="col-md-2"></div>
 
-    <div class="col-md-8">
-        <div class="card mainWindow">
-            <div class="card-body rounded-circle">
+    <div class="col-sm-12">
+  
             <div class="card mainStack ">
                     <div class="card-header">
                         <form asp-action="AddDay">
@@ -43,7 +41,7 @@
 
                         <div  class="card day" style="background: @color[rand]">
                             <div class="card-header">
-                                <h4>@w.Date.ToString("D")</h4>
+                                <h5>@w.Date.ToString("D")</h5>
                             </div>
                             <div class="card-body">
 
@@ -61,8 +59,8 @@
                                         <span class="badge badge-success badge-pill">X @v.Count</span>
 
                                         @{
-        decimal sum = v.Count * v.Price;
-        daySum += daySum;
+                                                decimal sum = v.Count * v.Price;
+                                                daySum += daySum;
                                         }
                                         <span class="badge float-right text-info "> Сумма @sum.ToString("c")</span>
 
@@ -102,7 +100,7 @@
 
                             </div>
                             <div class="card-footer ">
-                                <h5 class="float-right">
+                                <h6 class="float-right">
 
 
                                     @{
@@ -115,7 +113,7 @@
 
                                     }
                                     Итог: @t
-                                </h5>
+                                </h6>
                             </div>
 
                         </div>
@@ -125,9 +123,7 @@
             </div>
 
         </div>
-    </div>
-
-</div>
+  
     
 <script>
 
