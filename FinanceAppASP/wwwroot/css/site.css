@@ -1,26 +1,32 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background: #22B473;
 }
 
 
 .mainWindow
 {
-    background: #22b473;
+    background:#F4F2EC;
+   
+    padding: 20px;
 
 }
 
 .day
 {
     background: bisque;
-    margin:5px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 8px;
     
 }
 
 .mainStack
 {
-    background: #fdfffe;
+    background: #FAF8F2;
     min-height:700px;
+    box-shadow:inset 0 0 1px #000000;
 
 
 }

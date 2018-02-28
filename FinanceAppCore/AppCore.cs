@@ -36,6 +36,11 @@ namespace FinanceAppCore
         ICollection<Purchase> GetPurchaseList(DateTime date);
         Day GetDay(DateTime date);
 
+        void AddDay(Day day);
+
+        void AddPurchase(int id, Purchase pur);
+        void AddPurchase(DateTime date, Purchase pur);
+
         void DeleteDay(DateTime date);
         void DeletePurchase(DateTime date, Purchase purchase);
 
@@ -64,8 +69,6 @@ namespace FinanceAppCore
             GetDay(date)?.PurchaseList.Remove(purchase);
         }
 
-
-
         public Day GetDay(DateTime date)
         {
             try
@@ -80,6 +83,48 @@ namespace FinanceAppCore
             }
         }
 
+        public void AddDay(Day day)
+        {
+            if (day == null) return;
+
+            int id = 0;
+            if (Days.Count != 0) 
+                id = Days.Max(w => w.Id) + 1;
+
+            day.Id = id;
+            Days.Add(day);
+           
+        }
+
+        public void AddPurchase(int id, Purchase pur)
+        {
+            if (pur == null) return;
+
+            var q = Days.FirstOrDefault(w => w.Id == id);
+            if (q == null) return;
+
+
+            pur.Id = 0;
+
+            if(q.PurchaseList.Count!=0) pur.Id = q.PurchaseList.Count + 1;
+
+            q.PurchaseList.Add(pur);
+        }
+
+        public void AddPurchase(DateTime date, Purchase pur)
+        {
+            if (pur == null) return;
+            var q = Days.FirstOrDefault(w => w.Date == date);
+            if (q == null) return;
+
+
+            pur.Id = 0;
+
+            if (q.PurchaseList.Count != 0) pur.Id = q.PurchaseList.Count + 1;
+
+            q.PurchaseList.Add(pur);
+        }
+
         public ICollection<Purchase> GetPurchaseList(DateTime date) => GetDay(date)?.PurchaseList;
     }
 
@@ -90,12 +135,14 @@ namespace FinanceAppCore
 
         private IList<Day> _dayList;
         private string _fileName;
+        private IJsonRepositoryConfig config;
 
-        public JsonRepository(string filename)
+        public JsonRepository(IJsonRepositoryConfig config)
         {
 
+            this.config = config;
             _dayList = new List<Day>();
-            _fileName = filename;
+            _fileName = config.FileName;
             GetData();
         }
 
@@ -125,6 +172,10 @@ namespace FinanceAppCore
         }
     }
 
+    public interface IJsonRepositoryConfig
+    {
+        string FileName { get; set; }
+    }
 
     public class DayRepositoryMock : DayRepository
     {

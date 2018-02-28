@@ -1,92 +1,145 @@
-﻿@using FinanceAppCore
+﻿@using System.Runtime.InteropServices
+@using FinanceAppCore
 @model ICollection<FinanceAppCore.Day>
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="col-sm-3"></div>
+<div class="row">
+    <div class="col-md-2"></div>
 
-<div class="col-sm-6">
-    <div class="card mainWindow">
-       
-
-        @*<div class="bg-light card-header">
-            @{
-
-                string result = decimal.Zero.ToString("c");
-                var qw = Model.FirstOrDefault(e => e.Date == DateTime.Today);
-                if (qw != null)
-                {
-                    result = qw.PurchaseList.Sum(d => d.Price * d.Count).ToString("c");
-                }
-            }*@
-
-
-
-
-        <div class="card-body rounded-circle">
-            
-            <div class="card mainStack">
-                <div class="card-header">
-                         <button class="btn btn-outline-primary float-right">+</button>
-                
-                </div>
+    <div class="col-md-8">
+        <div class="card mainWindow">
+            <div class="card-body rounded-circle">
+            <div class="card mainStack ">
+                    <div class="card-header">
+                        <form asp-action="AddDay">
+                            <div class="form-row">
+                            <div class="col">
+                            <input class="form-control" type="date" required name="date"/>
+                                </div>
+                            <input type="hidden" name="id" value="123"/>
+                            <button class="btn btn-outline-primary float-right">+</button>
+                                </div>
+                                </form>
+                     </div>
            
-               
+                    @{
+                        Random rd = new Random();
+                        int previous = 0;
+                        string[] color = {"Linen", "LavenderBlush", "AliceBlue", "SeaShell", "PeachPuff "};
 
-                @{
-                    Random rd = new Random();
-                    int previous = 0;
-                    string[] color = {"Linen", "LavenderBlush", "AliceBlue", "SeaShell", "PeachPuff "};
-
-                }
-
-                @foreach (var w in Model.OrderByDescending(w => w.Date))
-                {
-                    int rand = rd.Next(0, 5);
-                    while (rand == previous)
-                    {
-                        rand = rd.Next(0, 5);
                     }
-                    previous = rand;
 
-                    <div class="card day" style="background: @color[rand]">
-                        <div class="card-header">
-                            <h4>@w.Date.ToString("D")</h4>
-                        </div>
-                        <div class="card-body">
+                    @foreach (var w in Model.OrderByDescending(w => w.Date))
+                    {
+                        int rand = rd.Next(0, 5);
+                        while (rand == previous)
+                        {
+                            rand = rd.Next(0, 5);
+                        }
+                        previous = rand;
 
-                            <ul class="list-group">
-                                @foreach (var v in w.PurchaseList)
-                                {
+                        <div  class="card day" style="background: @color[rand]">
+                            <div class="card-header">
+                                <h4>@w.Date.ToString("D")</h4>
+                            </div>
+                            <div class="card-body">
+
+                                <ul id="card-@w.Id" class="list-group">
+                                    @{
+                                        decimal daySum = 0;
+                                                if (w.PurchaseList != null)
+                                                {
+                                                    foreach (var v in w.PurchaseList)
+                                                    {
 
                                     <li class="list-group-item">
-                                        <span class="badge badge-primary badge-pill">@v.Count</span>
+
                                         @v.Item
+                                        <span class="badge badge-success badge-pill">X @v.Count</span>
+
+                                        @{
+        decimal sum = v.Count * v.Price;
+        daySum += daySum;
+                                        }
+                                        <span class="badge float-right text-info "> Сумма @sum.ToString("c")</span>
 
                                         <span class="badge float-right">@v.Price.ToString("c")</span>
+
                                     </li>
 
-                                }
-                                <li class="list-group-item">
-                                    <button class="btn btn-outline-primary btn-sm float-right">+</button>
-                                </li>
-                            </ul>
+                                            }
+                                    }
+                                    }
+                                    <li class="list-group-item">
+                                        <form asp-action="AddPurchase">
+                                            <div class="form-row">
+                                                <div class="col">
+                                                    <input type="hidden" name="Id" value="@w.Id"/>
+                                                    <input type="text" name="Item" required class="form-control form-control-sm" id="exampleInputEmail1" placeholder="Товар">
+                                                </div>
+                                                <div class="col">
+                                                    <input type="text" name="Count" required  class="form-control form-control-sm" id="exampleInputEmail1" placeholder="Количество">
+                                                </div>
+                                                <div class="col">
+                                                    <input type="text" name="Price" required  class="form-control form-control-sm" id="exampleInputEmail1" placeholder="Цена">
+                                                </div>
+
+                                                <div class="col">
+                                                    <button id="@w.Id" class="addPurchase btn btn-outline-primary btn-sm float-right">+</button>
+                                                </div>
+
+
+
+                                            </div>
+                                        </form>
+
+                                       
+                                    </li>
+                                </ul>
+
+                            </div>
+                            <div class="card-footer ">
+                                <h5 class="float-right">
+
+
+                                    @{
+                                        string t = "0";
+                                if (w.PurchaseList != null)
+                                    {
+                                        t = w.PurchaseList.Sum(q => q.Count * q.Price).ToString("c");
+                                    }
+
+
+                                    }
+                                    Итог: @t
+                                </h5>
+                            </div>
 
                         </div>
-                        <div class="card-footer ">
-                            <h5 class="float-right">
-                                Итог: @w.PurchaseList.Sum(we => we.Price * we.Count).ToString("c")
-                            </h5>
-                        </div>
+                    }
 
-                    </div>
-                }
-
+                </div>
             </div>
+
         </div>
-
-    </div>
     </div>
 
+</div>
+    
+<script>
+
+    //function addDay(prepend, a, b, c) {
+        
+    //}
+
+    //$('.addPurchase').click(function (e) {
+    //    var w = $(this).attr("id");
+    //    $('#card-' + w).prepend("<li class='list-group-item'>sadasd</li>");
+
+    //});
+
+
+</script>
