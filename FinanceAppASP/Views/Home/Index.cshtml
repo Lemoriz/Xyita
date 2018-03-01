@@ -34,7 +34,7 @@
             @{
                 if (Model.DayList != null)
                 {
-                    foreach (var w in Model.DayList.OrderByDescending(w => w.Date))
+                    foreach (var w in Model.DayList.OrderBy(w => w.Date))
                     {
 
                         @Html.Partial("DayView", w)

@@ -76,6 +76,10 @@ namespace FinanceAppASP.Controllers
 
     }
 
+
+
+
+
     public class PurchaseWithId
     {
         public int Id { get; set; }
@@ -133,7 +137,18 @@ namespace FinanceAppASP.Controllers
             }
 
             return RedirectToAction("Index");
+        }
 
+        public RedirectToActionResult DeletePurchase(int dayId, int purchaseid)
+        {
+            logic.Repository.DeletePurchase(dayId, purchaseid);
+            return RedirectToAction("Index");
+        }
+
+        public RedirectToActionResult DeleteDay(int dayId)
+        {
+            logic.Repository.DeleteDay(dayId);
+            return RedirectToAction("Index");
         }
     }
 }

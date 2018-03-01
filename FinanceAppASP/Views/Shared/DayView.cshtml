@@ -1,14 +1,27 @@
 ﻿@model FinanceAppASP.Controllers.DayViewModel
-    
-    
+
+
 @{
-    string[] colors = { "#c7ffe0", "rgb(255, 254, 194)", "rgb(252, 170, 173);"};
+    string[] colors = { "#c7ffe0", "rgb(255, 254, 194)", "rgb(252, 170, 173);" };
 }
 
 <div class="card day " style="background: @colors[Model.Color]">
     <div class="card-header">
-        <h5>@Model.Date</h5>
-    </div>
+        <form asp-action="DeleteDay">
+            <div class="form-row">
+                <div class="col">
+                    <h5>@Model.Date</h5>
+                </div>
+                <div class="col">
+                    <button class="btn btn-outline-secondary btn-sm float-right">X</button>
+                </div>
+            </div>
+            
+            <input type="hidden" name="dayId" value="@Model.Id"/>
+        </form>
+
+            
+        </div>
     <div class="card-body">
 
         <ul id="card-@Model.Id" class="list-group">
@@ -20,18 +33,32 @@
                     {
 
                         <li class="list-group-item">
+                            <form asp-action="DeletePurchase">
+                                <div class="form-row">
+                                    <div class="col">
+                                        @v.Item
+                                        <span class="badge badge-success badge-pill">X @v.Count</span>
 
-                            @v.Item
-                            <span class="badge badge-success badge-pill">X @v.Count</span>
+                                        @{
+                                            decimal sum = v.Count * v.Price;
+                                            daySum += daySum;
+                                        }
+                                    </div>
 
-                            @{
-                                decimal sum = v.Count * v.Price;
-                                daySum += daySum;
-                            }
-                            <span class="badge float-right text-info "> Сумма @sum.ToString("c")</span>
+                                    <div class="col">
+                                        <button class="btn btn-outline-secondary btn-sm float-right">X</button>
+                                        <span class="badge float-right text-info "> Сумма @sum.ToString("c")</span>
 
-                            <span class="badge float-right">@v.Price.ToString("c")</span>
+                                        <span class="badge float-right">@v.Price.ToString("c")</span>
 
+                                    </div>
+
+                                </div>
+
+                                <input type="hidden" name="DayId" value="@Model.Id" />
+
+                                <input type="hidden" name="PurchaseId" value="@v.Id" />
+                            </form>
                         </li>
 
                     }
@@ -67,7 +94,7 @@
     </div>
     <div class="card-footer ">
         <h6 class="float-right">
-            Итог: @Model.DayTotal
+            Итог: @Model.DayTotal.ToString("c")
         </h6>
     </div>
 

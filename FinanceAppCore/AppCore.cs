@@ -36,6 +36,7 @@ namespace FinanceAppCore
         ICollection<Day> Days { get; }
         ICollection<Purchase> GetPurchaseList(DateTime date);
         Day GetDay(DateTime date);
+        Day GetDay(int id);
 
         void AddDay(Day day);
 
@@ -43,7 +44,9 @@ namespace FinanceAppCore
         void AddPurchase(DateTime date, Purchase pur);
 
         void DeleteDay(DateTime date);
+        void DeleteDay(int dayId);
         void DeletePurchase(DateTime date, Purchase purchase);
+        void DeletePurchase(int dayId, int purchaseId);
 
         void GetData();
         void SaveData();
@@ -53,6 +56,8 @@ namespace FinanceAppCore
     public abstract class DayRepository : IDayRepository
     {
         public abstract ICollection<Day> Days { get; }
+        
+
         public abstract void GetData();
         public abstract void SaveData();
 
@@ -65,36 +70,49 @@ namespace FinanceAppCore
 
         }
 
+        public void DeleteDay(int dayId)
+        {
+            var w = GetDay(dayId);
+            if (w != null) Days.Remove(w);
+        }
+
         public void DeletePurchase(DateTime date, Purchase purchase)
         {
             GetDay(date)?.PurchaseList.Remove(purchase);
         }
 
-        public Day GetDay(DateTime date)
-        {
-            try
-            {
-                var day = Days.First(w => w.Date == date);
-                return day;
-            }
+        public void DeletePurchase(int dayId, int purId) =>
+            GetDay(dayId)?.PurchaseList?.RemoveAll(w => w.Id == purId);
+ 
+        public Day GetDay(int id) => Days.FirstOrDefault(w => w.Id == id);
 
-            catch (InvalidOperationException)
-            {
-                return null;
-            }
-        }
+        public Day GetDay(DateTime date) => Days.FirstOrDefault(w => w.Date == date);
+
 
         public void AddDay(Day day)
         {
             if (day == null) return;
 
+            if (day.Date > DateTime.Today) return;
+
             int id = 0;
-            if (Days.Count != 0)
-                id = Days.Max(w => w.Id) + 1;
 
-            day.Id = id;
-            Days.Add(day);
+            var d = Days.FirstOrDefault(w => w.Date == day.Date);
 
+            if (d != null)
+            {
+                d.PurchaseList.AddRange(day.PurchaseList);
+            }
+
+            else
+            {
+                if (Days.Count != 0)
+                    id = Days.Max(w => w.Id) + 1;
+
+                day.Id = id;
+                Days.Add(day);
+
+            }
         }
 
         public void AddPurchase(int id, Purchase pur)
