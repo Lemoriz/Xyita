@@ -10,7 +10,7 @@
         <form asp-action="DeleteDay">
             <div class="form-row">
                 <div class="col">
-                    <h5>@Model.Date</h5>
+                    <h5>@Model.Date.ToString("D")</h5>
                 </div>
                 <div class="col">
                     <button class="btn btn-outline-secondary btn-sm float-right">X</button>

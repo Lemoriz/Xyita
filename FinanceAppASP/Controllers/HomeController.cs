@@ -18,7 +18,7 @@ namespace FinanceAppASP.Controllers
     {
         public int Color { get; set; }
         public int Id { get; set; }
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         public decimal DayTotal { get; set; }
         public ICollection<Purchase> PurchaseList { get; set; }
 
@@ -50,7 +50,7 @@ namespace FinanceAppASP.Controllers
                 var q = new DayViewModel
                 {
                     PurchaseList = variable.PurchaseList,
-                    Date = variable.Date.ToString("D"),
+                    Date = variable.Date,
                     Id = variable.Id = variable.Id,
                     DayTotal = logic.CountForDay(variable.Date),
                     Color = color
