@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -88,12 +89,12 @@ namespace FinanceAppCore
             if (day == null) return;
 
             int id = 0;
-            if (Days.Count != 0) 
+            if (Days.Count != 0)
                 id = Days.Max(w => w.Id) + 1;
 
             day.Id = id;
             Days.Add(day);
-           
+
         }
 
         public void AddPurchase(int id, Purchase pur)
@@ -106,7 +107,7 @@ namespace FinanceAppCore
 
             pur.Id = 0;
 
-            if(q.PurchaseList.Count!=0) pur.Id = q.PurchaseList.Count + 1;
+            if (q.PurchaseList.Count != 0) pur.Id = q.PurchaseList.Count + 1;
 
             q.PurchaseList.Add(pur);
         }
@@ -233,7 +234,18 @@ namespace FinanceAppCore
         public AppLogic(IDayRepository repo)
         {
             _repo = repo;
+
+            if (!_repo.Days.Any(w => w.Date == DateTime.Today))
+            {
+                _repo.AddDay(
+                    new Day()
+                        {Date = DateTime.Today, PurchaseList = new List<Purchase>()}
+                );
+                _repo.SaveData();
+            }
         }
+
+
 
         /// <summary>
         /// Просчитать остаток за день
@@ -244,24 +256,33 @@ namespace FinanceAppCore
         {
             var day = _repo.GetDay(date);
             if (day == null) return 0;
-            return day.PurchaseList.Sum(w => w.Price);
+
+            return day.PurchaseList.Sum(w => w.Price*w.Count);
         }
 
+        public decimal CountForLastWeek() => CountForRange(DateTime.Today, DateTime.Today.AddDays(-7));
 
         /// <summary>
         /// Просчитать остаток за диапазон дней
         /// </summary>
+        /// <param name="date1">Считать ОТ</param>
+        ///  <param name="date2">Считать ДО</param>
         public decimal CountForRange(DateTime date1, DateTime date2)
         {
-            if (date1 < date2) return 0;
+            DateTime D1 = date1;
+            DateTime D2 = date2;
+
+            if (date1 > date2)
+            {
+                D1 = date2;
+                D2 = date1;
+            }
 
             decimal sum = 0;
 
-            for (DateTime f = date1; f <= date2; f = f.AddDays(1))
-            {
-                var count = CountForDay(f);
-                sum += count;
-            }
+            for (DateTime f = D1; f <= D2; f = f.AddDays(1))
+                sum += CountForDay(f);
+
             return sum;
 
         }

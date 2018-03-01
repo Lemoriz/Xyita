@@ -36,6 +36,7 @@ namespace FinanceAppASP
         {
             services.AddMvc();
             services.AddTransient<IJsonRepositoryConfig, param>();
+            services.AddScoped<AppLogic>();
             services.AddSingleton<IDayRepository,JsonRepository>(d=>new JsonRepository(new param()));
         }
 

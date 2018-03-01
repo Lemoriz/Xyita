@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -11,88 +12,104 @@ using Microsoft.AspNetCore.Rewrite.Internal.UrlActions;
 namespace FinanceAppASP.Controllers
 {
 
-    public class FF
+    
+
+    public class DayViewModel
+    {
+        public int Color { get; set; }
+        public int Id { get; set; }
+        public string Date { get; set; }
+        public decimal DayTotal { get; set; }
+        public ICollection<Purchase> PurchaseList { get; set; }
+
+    }
+
+
+    public class MainViewModel
+    {
+        public string[] colors = {"green", "yellow", "red" };
+        private AppLogic logic;
+
+        public MainViewModel(AppLogic logic)
+        {
+            this.logic = logic;
+            DayList = new List<DayViewModel>();
+
+            foreach (var variable in logic.Repository.Days)
+            {
+                int color = 0;
+                var t = logic.CountForDay(variable.Date);
+
+                if (t > 100)
+                    color = 1;
+
+                if (t > 1000)
+                    color = 2;
+
+
+                var q = new DayViewModel
+                {
+                    PurchaseList = variable.PurchaseList,
+                    Date = variable.Date.ToString("D"),
+                    Id = variable.Id = variable.Id,
+                    DayTotal = logic.CountForDay(variable.Date),
+                    Color = color
+                };
+
+                DayList.Add(q);
+            }
+        }
+
+        public string Week =>
+            logic.CountForRange(DateTime.Today, DateTime.Today.AddDays(-7)).ToString("c");
+
+
+        public List<DayViewModel> DayList { get;}
+
+
+    }
+
+    public class DayWithDate
     {
         public int Id { get; set; }
+        public string Date { get; set; }
 
-       public string Name { get; set; }
     }
 
-    [Route("api/[controller]")]
-    public class RepoController : Controller
+    public class PurchaseWithId
     {
-
-        private IDayRepository repo;
-
-        public RepoController(IDayRepository repo)
-        {
-            this.repo = repo;
-        }
-
-
-        [HttpGet]
-        public IEnumerable<Day> Get() => repo.Days;
-
-        [HttpGet("{id}")]
-        public Day Get(int id) => repo.Days.FirstOrDefault(w => w.Id == id);
-
-        [HttpPost]
-
-        public void Post(Day res)
-        {
-            var w =  HttpContext.Request.Body;
-            repo.Days.Add(res);
-          
-    
-        }
-
-
+        public int Id { get; set; }
+        public int Count { get; set; }
+        public decimal Price { get; set; }
+        public string Item { get; set; }
     }
+
+
 
     public class HomeController : Controller
     {
-        IDayRepository repo;
-        private AppLogic logic;
-     
-        public HomeController(IDayRepository repo)
-        {
 
-            this.repo = repo;
-            logic = new AppLogic(repo);
-            
+        private AppLogic logic;
+
+        public HomeController(AppLogic logic)
+        {
+            this.logic = logic;
         }
 
         public IActionResult Index()
         {
-
-            return View(repo.Days);
-
-        }
-
-        public class DayWithDate
-        {
-            public int Id { get; set; }
-            public string Date { get; set; }
-
-        }
-
-        public class PurchaseWithId
-        {
-            public int Id { get; set; }
-            public int Count { get; set; }
-            public decimal Price { get; set; }
-            public string Item { get; set; }
+            return View(new MainViewModel(logic));
         }
 
 
         public RedirectToActionResult AddPurchase(PurchaseWithId s)
         {
-            repo.AddPurchase(s.Id,new Purchase
+            logic.Repository.AddPurchase(s.Id, new Purchase
             {
                 Item = s.Item,
                 Count = s.Count,
                 Price = s.Price
-                    
+
             });
             return RedirectToAction("Index");
         }
@@ -110,12 +127,12 @@ namespace FinanceAppASP.Controllers
                     PurchaseList = new List<Purchase>()
 
                 };
-            
-                repo.AddDay(t);
-                repo.SaveData();
-             }
 
-        return RedirectToAction("Index");
+                logic.Repository.AddDay(t);
+                logic.Repository.SaveData();
+            }
+
+            return RedirectToAction("Index");
 
         }
     }
